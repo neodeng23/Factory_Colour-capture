@@ -13,7 +13,7 @@ img_path = "/Users/" + current_user + "/Desktop/pic/" + pic_name
 # Read image
 img = cv2.imread(img_path)
 
-x1, x2, y1, y2 = get_channel_config("B")
+x1, x2, y1, y2 = get_channel_config("D")
 print(x1, x2, y1, y2)
 
 cropImg = img[y1:y2, x1:x2]    # 裁剪【y1,y2：x1,x2】

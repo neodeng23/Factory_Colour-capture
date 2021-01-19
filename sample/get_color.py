@@ -46,3 +46,6 @@ def get_dominant_color(image):
             max_score = score
             dominant_color = (r, g, b)
     return dominant_color
+
+
+

@@ -1,25 +1,50 @@
 # -*- coding: utf-8 -*-
-import sys
 from PyQt5.QtWidgets import *  # PyQt5中使用的基本控件都在PyQt5.QtWidgets模块中
-from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-from main_ui import *  # 导入designer工具生成的login模块
-
-
-# class EmittingStream(QtCore.QObject):
-#     textWritten = QtCore.pyqtSignal(str)  # 定义一个发送str的信号
-#
-#     def write(self, data):
-#         self.textWritten.emit(str(data))
+from get_pos_config import *
+from get_color import *
+import datetime, time
+import os
+from main_ui import *
+import pytesseract
 
 
 class BackendThread(QThread):
-    update_date = pyqtSignal(str)  # 通过类成员对象定义信号
+    update_date = pyqtSignal(str)
 
     # 处理业务逻辑
     def run(self):
-        myWin.label.setStyleSheet(m_green_SheetStyle)
-        self.update_date.emit()
+        old_pic_name = "aa"
+        while True:
+            os.system("rm /Users/" + current_user + "/Desktop/pic/" + old_pic_name)
+            pic_name = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S') + ".png"
+            img_path = "/Users/" + current_user + "/Desktop/pic/" + pic_name
+            os.system("screencapture -x /Users/" + current_user + "/Desktop/pic/" + pic_name)
+            x, y = get_win_pos()
+            time.sleep(0.5)
+            img = cv2.imread(img_path)
+            if x != 9999 and y != 9999:
+                for unit in ["A", "B", "C", "D"]:
+                    x1, x2, y1, y2 = get_channel_config(unit, x, y)
+                    cropImg = img[y1:y2, x1:x2]
+                    cropImg = convert_from_cv2_to_image(cropImg)
+                    image = cropImg.convert('RGB')
+                    text = pytesseract.image_to_string(image)
+                    (r, g, b) = get_dominant_color(image)
+                    color = recognize_color(r, g, b)
+                    if unit == "A":
+                        myWin.lineEdit.setText("result : " + text + color)
+                        myWin.label.setStyleSheet(m_green_SheetStyle)
+                    if unit == "B":
+                        myWin.lineEdit_2.setText("result : " + text + color)
+                        myWin.label_2.setStyleSheet(m_green_SheetStyle)
+                    if unit == "C":
+                        myWin.lineEdit_3.setText("result : " + text + color)
+                        myWin.label_3.setStyleSheet(m_green_SheetStyle)
+                    if unit == "D":
+                        myWin.lineEdit_4.setText("result : " + text + color)
+                        myWin.label_4.setStyleSheet(m_green_SheetStyle)
+            old_pic_name = pic_name
 
 
 class MyMainForm(QMainWindow, Ui_MainWindow):
@@ -27,30 +52,16 @@ class MyMainForm(QMainWindow, Ui_MainWindow):
         super(MyMainForm, self).__init__(parent)
         self.setWindowTitle("MainWindow")
         self.setupUi(self)
-        self.pushButton.clicked.connect(self.onClick_Button)
 
     def initUI(self):
         self.backend = BackendThread()  # 创建线程
-        self.backend.update_date.connect(self.handleDisplay)  # 连接信号
+        #self.backend.update_date.connect(self.handleDisplay)  # 连接信号
         self.backend.start()  # 开始线程
-
-    def handleDisplay(self, data):
-        cursor = self.QTextEdit.textCursor()
-        cursor.movePosition(QtGui.QTextCursor.End)
-        self.textEdit.setText(data)
-        # cursor.insertText(data + '\n')
-        # self.QTextEdit.setTextCursor(cursor)
-        # self.QTextEdit.ensureCursorVisible()
-
-    def onClick_Button(self):
-        os.system(run_test_cmd)
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)  # 固定的，PyQt5程序都需要QApplication对象。sys.argv是命令行参数列表，确保程序可以双击运行
     myWin = MyMainForm()
-    # myWin.initUI()
+    myWin.initUI()
     myWin.show()
     sys.exit(app.exec())
-
-
