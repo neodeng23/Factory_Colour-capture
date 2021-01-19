@@ -6,17 +6,6 @@ from PyQt5.QtCore import *
 from main_ui import *  # 导入designer工具生成的login模块
 
 
-run_test_cmd = """
-        osascript -e '
-        tell application "System Events"
-	        tell process "Hyperion"
-		        click button "Start" of window 1 of application process "Hyperion" of application "System Events"
-	        end tell
-        end tell
-        '
-      """
-
-
 # class EmittingStream(QtCore.QObject):
 #     textWritten = QtCore.pyqtSignal(str)  # 定义一个发送str的信号
 #
@@ -48,10 +37,10 @@ class MyMainForm(QMainWindow, Ui_MainWindow):
     def handleDisplay(self, data):
         cursor = self.QTextEdit.textCursor()
         cursor.movePosition(QtGui.QTextCursor.End)
-        # self.textEdit.setText(data)
-        cursor.insertText(data + '\n')
-        self.QTextEdit.setTextCursor(cursor)
-        self.QTextEdit.ensureCursorVisible()
+        self.textEdit.setText(data)
+        # cursor.insertText(data + '\n')
+        # self.QTextEdit.setTextCursor(cursor)
+        # self.QTextEdit.ensureCursorVisible()
 
     def onClick_Button(self):
         os.system(run_test_cmd)
@@ -60,7 +49,7 @@ class MyMainForm(QMainWindow, Ui_MainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)  # 固定的，PyQt5程序都需要QApplication对象。sys.argv是命令行参数列表，确保程序可以双击运行
     myWin = MyMainForm()
-    myWin.initUI()
+    # myWin.initUI()
     myWin.show()
     sys.exit(app.exec())
 
