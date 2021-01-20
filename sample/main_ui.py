@@ -22,25 +22,26 @@ class Ui_MainWindow(object):
         MainWindow.resize(504, 498)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(340, 80, 59, 16))
         self.label.setObjectName("label")
-        self.label.setStyleSheet(m_grey_SheetStyle)
+        self.label.setStyleSheet(m_yellow_SheetStyle)
 
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(340, 120, 59, 16))
         self.label_2.setObjectName("label_2")
-        self.label_2.setStyleSheet(m_grey_SheetStyle)
+        self.label_2.setStyleSheet(m_yellow_SheetStyle)
 
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
         self.label_3.setGeometry(QtCore.QRect(340, 160, 59, 16))
         self.label_3.setObjectName("label_3")
-        self.label_3.setStyleSheet(m_grey_SheetStyle)
+        self.label_3.setStyleSheet(m_yellow_SheetStyle)
 
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
         self.label_4.setGeometry(QtCore.QRect(340, 200, 59, 16))
         self.label_4.setObjectName("label_4")
-        self.label_4.setStyleSheet(m_grey_SheetStyle)
+        self.label_4.setStyleSheet(m_yellow_SheetStyle)
 
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit.setGeometry(QtCore.QRect(92, 80, 161, 21))

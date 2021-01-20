@@ -9,8 +9,8 @@ csv = pd.read_csv('/Users/wts-sw/PycharmProjects/Factory_Colour-capture/src/colo
 
 
 def convert_from_cv2_to_image(img: np.ndarray) -> Image:
-    return Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-    # return Image.fromarray(img)
+    # return Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+    return Image.fromarray(img)
 
 
 def convert_from_image_to_cv2(img: Image) -> np.ndarray:

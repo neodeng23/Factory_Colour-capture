@@ -14,21 +14,18 @@ class BackendThread(QThread):
 
     # 处理业务逻辑
     def run(self):
-        old_pic_name = "aa"
         while True:
-            os.system("rm /Users/" + current_user + "/Desktop/pic/" + old_pic_name)
             pic_name = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S') + ".png"
             img_path = "/Users/" + current_user + "/Desktop/pic/" + pic_name
             os.system("screencapture -x /Users/" + current_user + "/Desktop/pic/" + pic_name)
             x, y = get_win_pos()
-            time.sleep(0.5)
-            img = cv2.imread(img_path)
+            time.sleep(0.3)
+            img = Image.open(img_path)
             if x != 9999 and y != 9999:
                 for unit in ["A", "B", "C", "D"]:
                     x1, x2, y1, y2 = get_channel_config(unit, x, y)
-                    cropImg = img[y1:y2, x1:x2]
-                    cropImg = convert_from_cv2_to_image(cropImg)
-                    image = cropImg.convert('RGB')
+                    image = img.crop((x1, y1, x2, y2))  # (left, upper, right, lower)
+                    image = image.convert('RGB')
                     text = pytesseract.image_to_string(image)
                     (r, g, b) = get_dominant_color(image)
                     color = recognize_color(r, g, b)
@@ -44,7 +41,16 @@ class BackendThread(QThread):
                     if unit == "D":
                         myWin.lineEdit_4.setText("result : " + text + color)
                         myWin.label_4.setStyleSheet(m_green_SheetStyle)
-            old_pic_name = pic_name
+            else:
+                myWin.lineEdit.setText("")
+                myWin.lineEdit_2.setText("")
+                myWin.lineEdit_3.setText("")
+                myWin.lineEdit_4.setText("")
+                # myWin.label.setStyleSheet(m_grey_SheetStyle)
+                # myWin.label_2.setStyleSheet(m_grey_SheetStyle)
+                # myWin.label_3.setStyleSheet(m_grey_SheetStyle)
+                # myWin.label_4.setStyleSheet(m_grey_SheetStyle)
+            os.system("rm /Users/" + current_user + "/Desktop/pic/" + pic_name)
 
 
 class MyMainForm(QMainWindow, Ui_MainWindow):
