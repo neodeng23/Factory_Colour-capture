@@ -29,18 +29,35 @@ class BackendThread(QThread):
                     text = pytesseract.image_to_string(image)
                     (r, g, b) = get_dominant_color(image)
                     color = recognize_color(r, g, b)
+                    # print(color)
                     if unit == "A":
-                        myWin.lineEdit.setText("result : " + text + color)
-                        myWin.label.setStyleSheet(m_green_SheetStyle)
+                        myWin.lineEdit.setText("A : " + text + color)
+                        if text in ["error", "fail", "ERROR", "FAIL"]:
+                            myWin.label.setStyleSheet(m_red_SheetStyle)
+                        else:
+                            myWin.label.setStyleSheet(m_green_SheetStyle)
+
                     if unit == "B":
-                        myWin.lineEdit_2.setText("result : " + text + color)
-                        myWin.label_2.setStyleSheet(m_green_SheetStyle)
+                        myWin.lineEdit_2.setText("B : " + text + color)
+                        if text in ["error", "fail", "ERROR", "FAIL"]:
+                            myWin.label_2.setStyleSheet(m_red_SheetStyle)
+                        else:
+                            myWin.label_2.setStyleSheet(m_green_SheetStyle)
+
                     if unit == "C":
-                        myWin.lineEdit_3.setText("result : " + text + color)
-                        myWin.label_3.setStyleSheet(m_green_SheetStyle)
+                        myWin.lineEdit_3.setText("C : " + text + color)
+                        if text in ["error", "fail", "ERROR", "FAIL"]:
+                            myWin.label_3.setStyleSheet(m_red_SheetStyle)
+                        else:
+                            myWin.label_3.setStyleSheet(m_green_SheetStyle)
+
                     if unit == "D":
-                        myWin.lineEdit_4.setText("result : " + text + color)
-                        myWin.label_4.setStyleSheet(m_green_SheetStyle)
+                        myWin.lineEdit_4.setText("D : " + text + color)
+                        if text in ["error", "fail", "ERROR", "FAIL"]:
+                            myWin.label_4.setStyleSheet(m_red_SheetStyle)
+                        else:
+                            myWin.label_4.setStyleSheet(m_green_SheetStyle)
+
             else:
                 myWin.lineEdit.setText("")
                 myWin.lineEdit_2.setText("")

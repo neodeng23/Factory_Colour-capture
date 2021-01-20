@@ -18,13 +18,21 @@ def convert_from_image_to_cv2(img: Image) -> np.ndarray:
     return np.asarray(img)
 
 
-def recognize_color(R,G,B):
+def recognize_color(R, G, B):
     minimum = 10000
     for i in range(len(csv)):
-        d = abs(R- int(csv.loc[i,"R"])) + abs(G- int(csv.loc[i,"G"]))+ abs(B- int(csv.loc[i,"B"]))
-        if(d<=minimum):
+        d = abs(R - int(csv.loc[i, "R"])) + abs(G - int(csv.loc[i, "G"])) + abs(B - int(csv.loc[i, "B"]))
+        if (d <= minimum):
             minimum = d
-            cname = csv.loc[i,"color_name"]
+            cname = csv.loc[i, "color_name"]
+    if cname in ["Tomato", "Bittersweet"]:  # 红色类
+        cname = "Red"
+    elif cname in ["Daffodil", "Light Khaki", "Isabelline", "Unmellow Yellow"]:  # 黄色类
+        cname = "Yellow"
+    elif cname in ["White", "White Smoke"]:
+        cname = "White"
+    else:
+        cname = ""
     return cname
 
 
@@ -46,6 +54,3 @@ def get_dominant_color(image):
             max_score = score
             dominant_color = (r, g, b)
     return dominant_color
-
-
-

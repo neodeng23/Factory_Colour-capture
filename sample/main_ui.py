@@ -59,9 +59,9 @@ class Ui_MainWindow(object):
         self.lineEdit_4.setGeometry(QtCore.QRect(90, 200, 161, 21))
         self.lineEdit_4.setObjectName("lineEdit_4")
 
-        self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
-        self.textEdit.setGeometry(QtCore.QRect(90, 260, 311, 131))
-        self.textEdit.setObjectName("textEdit")
+        # self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
+        # self.textEdit.setGeometry(QtCore.QRect(90, 260, 311, 131))
+        # self.textEdit.setObjectName("textEdit")
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
