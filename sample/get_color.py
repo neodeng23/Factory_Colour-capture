@@ -3,6 +3,8 @@ import pandas as pd
 import cv2
 import colorsys
 from PIL import Image
+import re
+import pytesseract
 
 index = ["color", "color_name", "hex", "R", "G", "B"]
 csv = pd.read_csv('/Users/wts-sw/PycharmProjects/Factory_Colour-capture/src/colors.csv', names=index, header=None)
@@ -25,12 +27,14 @@ def recognize_color(R, G, B):
         if (d <= minimum):
             minimum = d
             cname = csv.loc[i, "color_name"]
-    if cname in ["Tomato", "Bittersweet"]:  # 红色类
+    if cname in ["Tomato", "Bittersweet", "Salmon"]:  # 红色类
         cname = "Red"
-    elif cname in ["Daffodil", "Light Khaki", "Isabelline", "Unmellow Yellow"]:  # 黄色类
+    elif cname in ["Daffodil", "Light Khaki", "Isabelline", "Unmellow Yellow", "Yellow (Ryb)"]:  # 黄色类
         cname = "Yellow"
     elif cname in ["White", "White Smoke"]:
         cname = "White"
+    elif cname in ["Medium Spring Green", "Bright Turquoise", "Medium Aquamarine", "Aquamarine"]:
+        cname = "Green"
     else:
         cname = ""
     return cname
@@ -54,3 +58,14 @@ def get_dominant_color(image):
             max_score = score
             dominant_color = (r, g, b)
     return dominant_color
+
+
+def get_text(image):
+    text = pytesseract.image_to_string(image, lang='eng', config='--psm 10')
+    for i in ["ERROR", "PASS"]:
+        reslist = re.findall(i, text)
+        if len(reslist) != 0:
+            text = i
+    if text not in ["ERROR", "PASS"]:
+            text = " "
+    return text

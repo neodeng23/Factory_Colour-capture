@@ -6,7 +6,6 @@ from get_color import *
 import datetime, time
 import os
 from main_ui import *
-import pytesseract
 
 
 class BackendThread(QThread):
@@ -26,48 +25,59 @@ class BackendThread(QThread):
                     x1, x2, y1, y2 = get_channel_config(unit, x, y)
                     image = img.crop((x1, y1, x2, y2))  # (left, upper, right, lower)
                     image = image.convert('RGB')
-                    text = pytesseract.image_to_string(image)
+                    text = get_text(image)
                     (r, g, b) = get_dominant_color(image)
                     color = recognize_color(r, g, b)
-                    # print(color)
+                    #print(color)
                     if unit == "A":
-                        myWin.lineEdit.setText("A : " + text + color)
-                        if text in ["error", "fail", "ERROR", "FAIL"]:
+
+                        myWin.lineEdit.setText("A : " + text + " " + color)
+                        if color == "Red":
                             myWin.label.setStyleSheet(m_red_SheetStyle)
-                        else:
+                        elif color == "Green":
                             myWin.label.setStyleSheet(m_green_SheetStyle)
+                        else:
+                            myWin.label.setStyleSheet(m_grey_SheetStyle)
 
                     if unit == "B":
-                        myWin.lineEdit_2.setText("B : " + text + color)
-                        if text in ["error", "fail", "ERROR", "FAIL"]:
+
+                        myWin.lineEdit_2.setText("B : " + text + " " + color)
+                        if color == "Red":
                             myWin.label_2.setStyleSheet(m_red_SheetStyle)
-                        else:
+                        elif color == "Green":
                             myWin.label_2.setStyleSheet(m_green_SheetStyle)
+                        else:
+                            myWin.label_2.setStyleSheet(m_grey_SheetStyle)
 
                     if unit == "C":
-                        myWin.lineEdit_3.setText("C : " + text + color)
-                        if text in ["error", "fail", "ERROR", "FAIL"]:
+                        myWin.lineEdit_3.setText("C : " + text + " " + color)
+                        if color == "Red":
                             myWin.label_3.setStyleSheet(m_red_SheetStyle)
-                        else:
+                        elif color == "Green":
                             myWin.label_3.setStyleSheet(m_green_SheetStyle)
+                        else:
+                            myWin.label_3.setStyleSheet(m_grey_SheetStyle)
 
                     if unit == "D":
-                        myWin.lineEdit_4.setText("D : " + text + color)
-                        if text in ["error", "fail", "ERROR", "FAIL"]:
+                        # image.save("/Users/" + current_user + "/Desktop/pic/" + pic_name + ".png")
+                        myWin.lineEdit_4.setText("D : " + text + " " + color)
+                        if color == "Red":
                             myWin.label_4.setStyleSheet(m_red_SheetStyle)
-                        else:
+                        elif color == "Green":
                             myWin.label_4.setStyleSheet(m_green_SheetStyle)
+                        else:
+                            myWin.label_4.setStyleSheet(m_grey_SheetStyle)
 
             else:
-                myWin.lineEdit.setText("")
-                myWin.lineEdit_2.setText("")
-                myWin.lineEdit_3.setText("")
-                myWin.lineEdit_4.setText("")
                 # myWin.label.setStyleSheet(m_grey_SheetStyle)
                 # myWin.label_2.setStyleSheet(m_grey_SheetStyle)
                 # myWin.label_3.setStyleSheet(m_grey_SheetStyle)
                 # myWin.label_4.setStyleSheet(m_grey_SheetStyle)
-            os.system("rm /Users/" + current_user + "/Desktop/pic/" + pic_name)
+                myWin.lineEdit.setText("")
+                myWin.lineEdit_2.setText("")
+                myWin.lineEdit_3.setText("")
+                myWin.lineEdit_4.setText("")
+            # os.system("rm /Users/" + current_user + "/Desktop/pic/" + pic_name)
 
 
 class MyMainForm(QMainWindow, Ui_MainWindow):
