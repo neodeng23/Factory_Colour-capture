@@ -40,7 +40,8 @@ def get_channel_config(unit, destop_x, destop_y):
         for i in config_data["Current resolution"]:
             if config_data["Current resolution"][i] == 1:
                 unit_data = config_data[i]["Channel_" + unit]
-        n = config_data[i]["magnification"]
+                x = i
+        n = config_data[x]["magnification"]
         x1 = unit_data["X1"] + destop_x * n
         x2 = unit_data["X2"] + destop_x * n
         y1 = unit_data["Y1"] + destop_y * n

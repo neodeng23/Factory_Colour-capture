@@ -62,10 +62,10 @@ def get_dominant_color(image):
 
 def get_text(image):
     text = pytesseract.image_to_string(image, lang='eng', config='--psm 10')
-    for i in ["ERROR", "PASS"]:
+    for i in ["ERROR", "PASS", "FAIL"]:
         reslist = re.findall(i, text)
         if len(reslist) != 0:
             text = i
-    if text not in ["ERROR", "PASS"]:
+    if text not in ["ERROR", "PASS", "FAIL"]:
             text = " "
     return text

@@ -6,7 +6,6 @@
 	},
 	"1920x1080":
 	{
-		"magnification":1,
 		"Channel_A" :
 		{
 			"X1": 50,
@@ -38,7 +37,6 @@
 	},
 	"2560x1600":
 	{
-		"magnification":2,
 		"Channel_A" :
 		{
 			"X1": 110,

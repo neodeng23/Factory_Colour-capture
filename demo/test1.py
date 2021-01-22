@@ -15,10 +15,10 @@ img_path = "/Users/" + current_user + "/Desktop/pic/" + pic_name
 
 x, y = get_win_pos()
 # print(x,y)
-x1, x2, y1, y2 = get_channel_config("D", x ,y)
+x1, x2, y1, y2 = get_channel_config("A", x ,y)
 print(x1, x2, y1, y2)
 # img = Image.open(img_path)
-#
+# #
 # cropped = img.crop((x1, y1, x2, y2))  # (left, upper, right, lower)
 # cropped.show()
 # print(get_dominant_color(cropped))

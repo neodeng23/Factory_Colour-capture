@@ -77,7 +77,7 @@ class BackendThread(QThread):
                 myWin.lineEdit_2.setText("")
                 myWin.lineEdit_3.setText("")
                 myWin.lineEdit_4.setText("")
-            # os.system("rm /Users/" + current_user + "/Desktop/pic/" + pic_name)
+            os.system("rm /Users/" + current_user + "/Desktop/pic/" + pic_name)
 
 
 class MyMainForm(QMainWindow, Ui_MainWindow):
